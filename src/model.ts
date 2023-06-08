@@ -1,6 +1,5 @@
 import { encode } from "./tasks/encode";
 import { caption } from "./tasks/caption";
-import { caption_test } from "./tasks/caption";
 
 export default class Model {
     private modelName: string | undefined;
@@ -28,11 +27,6 @@ export default class Model {
     }
 
     public caption(input: any): void {
-        // caption(this.host, this.token, input);
-        caption({input: input, output: 886, endpoint: this.host, token: this.token})
-    }
-
-    public test(): void {
-        caption_test({endpoint: this.host, token: this.token});
+        caption({image: input, endpoint: this.host, token: this.token})
     }
 }

@@ -1,5 +1,4 @@
 import { BaseInput, Payload } from "../interfaces/payload";
-// import { DocumentArray } from "../interfaces/docarray";
 import { Document, NDArray } from "../interfaces/docarray"
 import { randomUUID } from 'crypto';
 import fs from 'fs';
@@ -30,6 +29,7 @@ async function loadPlainIntoImageDocument(content: NDArray | string): Promise<Do
         return { id: randomUUID(), blob: blob}
     }
 }
+
 
 export async function loadPlainIntoDocument(content: NDArray | string, mimeType?: string): Promise<Document | void> {
     if (mimeType === 'image') {

@@ -1,46 +1,27 @@
 import { getBasePayload, loadPlainIntoDocument } from "./helper";
 import { CaptionInput } from "interfaces/payload";
+import { DocumentArray } from "interfaces/docarray";
 
-export async function caption(...args: { [key: string]: any }[]): Promise<void> {
+export async function caption(captionInput: CaptionInput): Promise<any> {
     console.log('caption');
-    // console.log(host);
-    // console.log(token);
-    // console.log(args);
-    // console.log(args[0]);
-    // console.log(args[0].input)
-    let [payload, contentType] = await getCaptionPayload({ image: args[0].input.toString(), endpoint: args[0].endpoint, token: args[0].token });
+    console.log(captionInput);
+
+    let [payload, contentType] = await getCaptionPayload(captionInput);
     payload;
     contentType;
 }
 
-export function caption_test(input: CaptionInput): void {
-    console.log('caption_input');
-    input;
-    // console.log(input);
-    // console.log(input.image);
-    // console.log(input.docs);
-    // console.log(input.parameters);
-    // console.log(input.request_size);
-    console.log('caption_input');
-}
-
 async function getCaptionPayload(captionInput: CaptionInput): Promise<[any, any]> {
-    console.log('get_caption_payload');
-    // console.log(args);
-    // console.log(args[0]);
-    // console.log(args[0].input)
-
     const payload = getBasePayload(captionInput);
     payload.body.exec_endpoint = '/caption';
 
     console.log();
-    console.log(53535353);
+    console.log('get_caption_payload');
     console.log(payload);
-    console.log(35353535);
     console.log();
 
 
-    let contentType: string = '';
+    let contentType;
 
     if (captionInput.docs) {
         if (captionInput.image) {
@@ -51,14 +32,17 @@ async function getCaptionPayload(captionInput: CaptionInput): Promise<[any, any]
     }
     else if (captionInput.image) {
         contentType = 'plain';
-        let doc = await loadPlainIntoDocument(captionInput.image, "image");
-        console.log(doc);
-
-
+        let imageDoc = await loadPlainIntoDocument(captionInput.image, "image");
+        payload.body.data = [imageDoc] as DocumentArray;
     }
-
-    contentType;
-
+    else {
+        throw new Error('Please provide either image or docs input.');
+    }
+    console.log('data')
+    console.log(payload)
+    console.log()
+    console.log('datadata')
+    console.log(payload.body.data)
 
     return [payload, contentType];
 }
