@@ -1,4 +1,4 @@
-import { BaseInput, Payload } from "../interfaces/payload";
+import { BaseUserInput, BasePayloadInput, Payload } from "../interfaces/payload";
 import { Document, NDArray } from "../interfaces/docarray"
 import { randomUUID } from 'crypto';
 import fs from 'fs';
@@ -54,15 +54,13 @@ export async function loadPlainIntoDocument(content: NDArray | string, mimeType?
 }
 
 
-export function getBasePayload(baseInput: BaseInput): Payload {
-    baseInput.parameters = baseInput.parameters ?? {};
-    baseInput.parameters.drop_image_content = baseInput.parameters.drop_image_content ?? true;
+export function getBasePayload(baseUserInput: BaseUserInput, basePayloadInput: BasePayloadInput): Payload {
+    baseUserInput.parameters = baseUserInput.parameters ?? {};
+    baseUserInput.parameters.drop_image_content = baseUserInput.parameters.drop_image_content ?? true;
 
     const payload: Payload = {} as Payload;
-    const headers = { 'Content-Type': 'application/json', 'Authorization': baseInput.token };
-    const body = { parameters: baseInput.parameters };
-
-    headers['Authorization'] = baseInput.token;
+    const headers = { 'Content-Type': 'application/json', 'Authorization': basePayloadInput.token };
+    const body = { parameters: baseUserInput.parameters };
     payload.headers = headers;
     payload.body = body;
     return payload
