@@ -59,7 +59,7 @@ export function getBasePayload(baseInput: BaseInput): Payload {
     baseInput.parameters.drop_image_content = baseInput.parameters.drop_image_content ?? true;
 
     const payload: Payload = {} as Payload;
-    const headers = { 'Content-Type?': 'application/json', 'Authorization': baseInput.token };
+    const headers = { 'Content-Type': 'application/json', 'Authorization': baseInput.token };
     const body = { parameters: baseInput.parameters };
 
     headers['Authorization'] = baseInput.token;

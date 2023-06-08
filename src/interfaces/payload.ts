@@ -1,4 +1,5 @@
 import { DocumentArray, NDArray } from "./docarray";
+import { HeadersInit } from 'undici'
 
 export interface Parameters {
     drop_image_content?: boolean;
@@ -25,9 +26,8 @@ export interface EncodeInput extends BaseInput {
 
 export interface Payload {
     headers: {
-        'Content-Type?': string;
+        'Content-Type'?: string;
         Authorization?: string;
-
     }
     body: {
         data?: DocumentArray;
