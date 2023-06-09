@@ -32,8 +32,16 @@ export interface EncodeInput {
 }
 
 export interface RankInput {
-    
+    text?: string;
+    image?: NDArray | string;
+    candidates: NDArray[] | string[];
+    candidates_type: 'text' | 'image';
+    parameters?: RankParameters;
 }
+
+// export interface UpscaleInput {
+//     image:
+// }
 
 export interface VqaInput {
     image: NDArray | string;
