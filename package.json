@@ -32,7 +32,7 @@
         "@typescript-eslint/parser": "^5.42.1",
         "eslint": "^8.42.0",
         "prettier": "^2.8.8",
-        "husky": "^8.0.0"
+        "husky": "^8.0.1"
     },
     "husky": {
         "hooks": {
