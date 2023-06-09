@@ -4,25 +4,27 @@ export interface Parameters {
     drop_image_content?: boolean;
 }
 
+export interface CaptionParameters extends Parameters {
+    // num_captions?: number; // reserved for future use
+}
+export interface EncodeParameters extends Parameters {}
+
+export interface AllParameters extends CaptionParameters, EncodeParameters {}
+
 export interface BasePayloadInput {
     endpoint: string;
     token?: string;
 }
 
-export interface BaseUserInput {
-    parameters?: Parameters;
-    request_size?: number;
+
+export interface CaptionInput {
+    image: NDArray | string;
+    parameters?: CaptionParameters;
 }
 
-export interface CaptionInput extends BaseUserInput {
-    image?: NDArray | string;
-    docs?: DocumentArray;
-}
-
-export interface EncodeInput extends BaseUserInput {
+export interface EncodeInput {
     text?: string;
     image?: NDArray | string;
-    docs?: DocumentArray;
 }
 
 export interface Payload {
@@ -32,7 +34,7 @@ export interface Payload {
     }
     body: {
         data?: DocumentArray;
-        parameters?: Parameters;
+        parameters?: AllParameters;
         exec_endpoint?: string;
     }
 }

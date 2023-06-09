@@ -1,6 +1,7 @@
 import { encode } from "./tasks/encode";
 import { caption } from "./tasks/caption";
-import { CaptionInput } from "interfaces/payload";
+import { Parameters } from "interfaces/payload";
+import { NDArray } from "interfaces/docarray";
 
 
 export default class Model {
@@ -21,7 +22,7 @@ export default class Model {
         encode(this.host, this.token, [n1, n2]);
     }
 
-    public async caption(input: CaptionInput): Promise<any> {
-        return await caption(input, {endpoint: this.host, token: this.token});
+    public async caption(image: NDArray | string, parameters?: Parameters): Promise<any> {
+        return await caption({image: image, parameters: parameters}, {endpoint: this.host, token: this.token});
     }
 }
