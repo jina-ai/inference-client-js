@@ -26,6 +26,15 @@
         "tslib": "^2.5.2",
         "undici": "^5.22.1"
     },
-    "devDependencies": {
+    "devDependencies": {},
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "src/**/*.ts": [
+            "eslint"
+        ]
     }
 }
