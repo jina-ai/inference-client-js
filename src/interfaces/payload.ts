@@ -11,6 +11,12 @@ export interface EncodeParameters extends Parameters {}
 
 export interface RankParameters extends Parameters {}
 
+export interface UpscaleParameters extends Parameters {
+    scale?: string;
+    image_format?: 'png' | 'jpeg';
+    output_path?: string;
+}
+
 export interface VqaParameters extends Parameters {}
 
 export interface AllParameters extends CaptionParameters, EncodeParameters, RankParameters, VqaParameters {}
@@ -39,9 +45,10 @@ export interface RankInput {
     parameters?: RankParameters;
 }
 
-// export interface UpscaleInput {
-//     image:
-// }
+export interface UpscaleInput {
+    image: NDArray | string;
+    parameters?: UpscaleParameters;
+}
 
 export interface VqaInput {
     image: NDArray | string;
