@@ -26,7 +26,10 @@
         "tslib": "^2.5.2",
         "undici": "^5.22.1"
     },
-    "devDependencies": {},
+    "devDependencies": {
+        "eslint": "^8.42.0",
+        "prettier": "^2.8.8"
+    },
     "husky": {
         "hooks": {
             "pre-commit": "lint-staged"

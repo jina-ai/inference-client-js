@@ -14,10 +14,10 @@ export async function caption(captionInput: CaptionInput, basePayloadInput: Base
 async function getCaptionPayload(captionInput: CaptionInput, basePayloadInput: BasePayloadInput): Promise<Payload> {
     const payload = getBasePayload(captionInput.parameters as AllParameters, basePayloadInput);
     payload.body.exec_endpoint = '/caption';
-
+ 
     const doc = await loadPlainIntoDocument(captionInput.image, "image");
     payload.body.data = [doc] as DocumentArray;
-    return payload
+    return payload 
 }
 
 
