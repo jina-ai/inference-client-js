@@ -2,6 +2,7 @@ import { encode } from "./tasks/encode";
 import { caption } from "./tasks/caption";
 import { Parameters } from "interfaces/payload";
 import { NDArray } from "interfaces/docarray";
+import { vqa } from "./tasks/vqa";
 
 
 export default class Model {
@@ -18,11 +19,19 @@ export default class Model {
         this.modelName; 
     }
 
-    public encode(n1: number, n2: number): void {
-        encode(this.host, this.token, [n1, n2]);
+    public async encodeText(text: string, parameters?: Parameters): Promise<NDArray> {
+        return await encode({text: text, parameters: parameters}, {endpoint: this.host, token: this.token});
     }
 
-    public async caption(image: NDArray | string, parameters?: Parameters): Promise<any> {
+    public async encodeImage(image: NDArray | string, parameters?: Parameters): Promise<NDArray> {
+        return await encode({image: image, parameters: parameters}, {endpoint: this.host, token: this.token});
+    }
+
+    public async caption(image: NDArray | string, parameters?: Parameters): Promise<string> {
         return await caption({image: image, parameters: parameters}, {endpoint: this.host, token: this.token});
+    }
+
+    public async vqa(image: NDArray | string, question: string, parameters?: Parameters): Promise<string> {
+        return await vqa({image: image, question: question, parameters: parameters}, {endpoint: this.host, token: this.token});
     }
 }

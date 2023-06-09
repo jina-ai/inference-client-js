@@ -9,13 +9,16 @@ export interface CaptionParameters extends Parameters {
 }
 export interface EncodeParameters extends Parameters {}
 
-export interface AllParameters extends CaptionParameters, EncodeParameters {}
+export interface RankParameters extends Parameters {}
+
+export interface VqaParameters extends Parameters {}
+
+export interface AllParameters extends CaptionParameters, EncodeParameters, RankParameters, VqaParameters {}
 
 export interface BasePayloadInput {
     endpoint: string;
     token?: string;
 }
-
 
 export interface CaptionInput {
     image: NDArray | string;
@@ -25,6 +28,17 @@ export interface CaptionInput {
 export interface EncodeInput {
     text?: string;
     image?: NDArray | string;
+    parameters?: EncodeParameters;
+}
+
+export interface RankInput {
+    
+}
+
+export interface VqaInput {
+    image: NDArray | string;
+    question: string;
+    parameters?: VqaParameters;
 }
 
 export interface Payload {
