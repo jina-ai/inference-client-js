@@ -1,5 +1,5 @@
-import { Document, DocumentArray, NDArray } from 'interfaces/docarray';
-import { AllParameters, BasePayloadInput, Payload, UpscaleInput } from 'interfaces/payload';
+import { Document, DocumentArray, NDArray } from '../interfaces/docarray';
+import { AllParameters, BasePayloadInput, Payload, UpscaleInput } from '../interfaces/payload';
 import { getBasePayload, loadPlainIntoDocument } from './helper';
 import { fetch } from 'undici';
 

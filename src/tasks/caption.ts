@@ -1,6 +1,6 @@
 import { getBasePayload, loadPlainIntoDocument } from './helper';
-import { BasePayloadInput, CaptionInput, Payload } from 'interfaces/payload';
-import { DocumentArray } from 'interfaces/docarray';
+import { BasePayloadInput, CaptionInput, Payload } from '../interfaces/payload';
+import { DocumentArray } from '../interfaces/docarray';
 import { fetch } from 'undici';
 
 export async function caption(

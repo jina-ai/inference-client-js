@@ -1,17 +1,12 @@
 {
     "name": "inference-client",
-    "version": "0.0.2",
+    "version": "0.0.4",
     "description": "Jina Inference Client for JavaScript",
-    "main": "index.ts",
-    "types": "index.d.ts",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "tsc -p .",
-        "build:pub": "tsc -p ./tsconfig.pub.json",
-        "build:clean": "git clean -dfx -e node_modules -e .vscode",
-        "mangle-version": "mangle-version",
-        "publish:beta": "npm publish --tag beta --access public",
-        "publish:latest": "npm publish --tag latest --access public",
+        "build": "tsc",
+        "test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --logHeapUsage --runInBand --config ./jest.base.js --coverage --forceExit",
         "lint": "eslint \"src/**/*.ts\" --fix",
         "prepare": "husky install"
     },

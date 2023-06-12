@@ -1,6 +1,6 @@
-import { BasePayloadInput, EncodeInput, Payload } from 'interfaces/payload';
+import { BasePayloadInput, EncodeInput, Payload } from '../interfaces/payload';
 import { getBasePayload, loadPlainIntoDocument } from './helper';
-import { DocumentArray, NDArray } from 'interfaces/docarray';
+import { DocumentArray, NDArray } from '../interfaces/docarray';
 import { fetch } from 'undici';
 
 export async function encode(encodeInput: EncodeInput, basePaylaodInput: BasePayloadInput): Promise<NDArray> {

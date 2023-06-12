@@ -1,5 +1,5 @@
-import { EncodeInput, CaptionInput, RankInput, UpscaleInput, VqaInput } from 'interfaces/payload';
-import { NDArray } from 'interfaces/docarray';
+import { EncodeInput, CaptionInput, RankInput, UpscaleInput, VqaInput } from './interfaces/payload';
+import { NDArray } from './interfaces/docarray';
 import { caption } from './tasks/caption';
 import { encode } from './tasks/encode';
 import { rank } from './tasks/rank';
