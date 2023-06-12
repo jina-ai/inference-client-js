@@ -1,15 +1,14 @@
-import { DocumentArray, NDArray } from "./docarray";
+import { DocumentArray, NDArray } from './docarray';
 
 export interface Parameters {
     drop_image_content?: boolean;
 }
 
-export interface CaptionParameters extends Parameters {
-    // num_captions?: number; // reserved for future use
-}
-export interface EncodeParameters extends Parameters {}
+export type CaptionParameters = Parameters;
 
-export interface RankParameters extends Parameters {}
+export type EncodeParameters = Parameters;
+
+export type RankParameters = Parameters;
 
 export interface UpscaleParameters extends Parameters {
     scale?: string;
@@ -17,7 +16,7 @@ export interface UpscaleParameters extends Parameters {
     output_path?: string;
 }
 
-export interface VqaParameters extends Parameters {}
+export type VqaParameters = Parameters;
 
 export interface AllParameters extends CaptionParameters, EncodeParameters, RankParameters, VqaParameters {}
 
@@ -54,16 +53,17 @@ export interface VqaInput {
     image: NDArray | string;
     question: string;
     parameters?: VqaParameters;
+    [key: string]: any;
 }
 
 export interface Payload {
     headers: {
         'Content-Type'?: string;
         Authorization?: string;
-    }
+    };
     body: {
         data?: DocumentArray;
         parameters?: AllParameters;
         exec_endpoint?: string;
-    }
+    };
 }

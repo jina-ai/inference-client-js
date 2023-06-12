@@ -1,5 +1,5 @@
-import { AllParameters, BasePayloadInput, Payload } from "../interfaces/payload";
-import { Document, NDArray } from "../interfaces/docarray"
+import { AllParameters, BasePayloadInput, Payload } from '../interfaces/payload';
+import { Document, NDArray } from '../interfaces/docarray';
 import { randomUUID } from 'crypto';
 import fs from 'fs';
 import { fetch } from 'undici';
@@ -12,47 +12,39 @@ async function loadImageBase64(url: string): Promise<string> {
     return base64;
 }
 
-
 async function loadPlainIntoImageDocument(content: NDArray | string): Promise<Document> {
     let blob;
     try {
         if (fs.existsSync(content as string)) {
             blob = fs.readFileSync(content as string, 'base64');
-        }
-        else {
+        } else {
             blob = await loadImageBase64(content as string);
         }
         return { id: randomUUID(), blob: blob, uri: content as string };
-    }
-    catch (err) {
+    } catch (err) {
         blob = content;
-        return { id: randomUUID(), blob: blob}
+        return { id: randomUUID(), blob: blob };
     }
 }
-
 
 export async function loadPlainIntoDocument(content: NDArray | string, mimeType?: string): Promise<Document | void> {
     if (mimeType === 'image') {
         try {
             return await loadPlainIntoImageDocument(content);
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err);
         }
-    }
-    else if (mimeType === 'text') {
+    } else if (mimeType === 'text') {
         return { id: randomUUID(), text: content as string };
     }
     if (!mimeType) {
         try {
             return await loadPlainIntoImageDocument(content as string);
-        }
-        catch (err) {
+        } catch (err) {
             return { id: randomUUID(), text: content as string };
         }
     }
 }
-
 
 export function getBasePayload(parameters: AllParameters, basePayloadInput: BasePayloadInput): Payload {
     parameters = parameters ?? {};
@@ -63,5 +55,5 @@ export function getBasePayload(parameters: AllParameters, basePayloadInput: Base
     const body = { parameters: parameters };
     payload.headers = headers;
     payload.body = body;
-    return payload
+    return payload;
 }

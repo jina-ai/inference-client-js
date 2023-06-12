@@ -1,11 +1,15 @@
-import { Document, DocumentArray, NDArray } from "interfaces/docarray";
-import { AllParameters, BasePayloadInput, Payload, RankInput } from "interfaces/payload";
-import { getBasePayload, loadPlainIntoDocument } from "./helper";
+import { Document, DocumentArray, NDArray } from 'interfaces/docarray';
+import { AllParameters, BasePayloadInput, Payload, RankInput } from 'interfaces/payload';
+import { getBasePayload, loadPlainIntoDocument } from './helper';
 import { fetch } from 'undici';
 
 export async function rank(rankInput: RankInput, basePayloadInput: BasePayloadInput): Promise<NDArray[] | string[]> {
     const payload = await getRankPayload(rankInput, basePayloadInput);
-    const result = await fetch(basePayloadInput.endpoint + '/post', { method: 'POST', headers: payload.headers, body: JSON.stringify(payload.body) })
+    const result = await fetch(basePayloadInput.endpoint + '/post', {
+        method: 'POST',
+        headers: payload.headers,
+        body: JSON.stringify(payload.body),
+    });
     return await unboxRankResult(await result.json(), rankInput.candidates_type);
 }
 
@@ -15,18 +19,16 @@ async function getRankPayload(rankInput: RankInput, basePayloadInput: BasePayloa
 
     let doc: Document;
     if (rankInput.text) {
-        doc = await loadPlainIntoDocument(rankInput.text, "text") as Document;
-    }
-    else if (rankInput.image) {
-        doc = await loadPlainIntoDocument(rankInput.image, "image") as Document;
-    }
-    else {
+        doc = (await loadPlainIntoDocument(rankInput.text, 'text')) as Document;
+    } else if (rankInput.image) {
+        doc = (await loadPlainIntoDocument(rankInput.image, 'image')) as Document;
+    } else {
         throw new Error('Please provide either text or image to rank.');
     }
 
-    let candidatesDocs = [] as Document[];
-    for (let candidate of rankInput.candidates) {
-        candidatesDocs.push(await loadPlainIntoDocument(candidate, rankInput.candidates_type) as Document);
+    const candidatesDocs = [] as Document[];
+    for (const candidate of rankInput.candidates) {
+        candidatesDocs.push((await loadPlainIntoDocument(candidate, rankInput.candidates_type)) as Document);
     }
 
     doc.matches = candidatesDocs as Document[];
@@ -35,12 +37,11 @@ async function getRankPayload(rankInput: RankInput, basePayloadInput: BasePayloa
 }
 
 async function unboxRankResult(result: any, candidatesType: string): Promise<NDArray[] | string[]> {
-    let output = [];
-    for (let match of result.data[0].matches) {
-        if (candidatesType === "text") {
+    const output = [];
+    for (const match of result.data[0].matches) {
+        if (candidatesType === 'text') {
             output.push(match.text);
-        }
-        else {
+        } else {
             output.push(match.uri ?? match.blob ?? undefined);
         }
     }

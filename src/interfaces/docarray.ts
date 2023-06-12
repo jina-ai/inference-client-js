@@ -13,12 +13,12 @@ export interface NDArray {
     dense?: DenseNDArray;
     sparse?: SparseNDArray;
     cls_name: string;
-    parameters?: { [k: string]: any; };
+    parameters?: { [k: string]: any };
 }
 
 export interface Graph {
     adjacency?: NDArray;
-    edge_features?: { [k: string]: any; };
+    edge_features?: { [k: string]: any };
     undirected: boolean;
 }
 
@@ -44,13 +44,13 @@ export interface Document {
     matches?: Document[];
     uri?: string;
     mime_type?: string;
-    tags?: { [k: string]: any; };
+    tags?: { [k: string]: any };
     location?: number[];
     offset?: number;
     embedding?: NDArray;
-    scores?: { [k: string]: NamedScore; };
+    scores?: { [k: string]: NamedScore };
     modality?: string;
-    evaluations?: { [k: string]: NamedScore; };
+    evaluations?: { [k: string]: NamedScore };
 }
 
-export interface DocumentArray<T extends Document = Document> extends Array<T> { }
+export type DocumentArray<T extends Document = Document> = Array<T>;
