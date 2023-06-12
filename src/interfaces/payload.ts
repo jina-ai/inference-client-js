@@ -25,35 +25,29 @@ export interface BasePayloadInput {
     token?: string;
 }
 
-export interface CaptionInput {
+export interface CaptionInput extends CaptionParameters {
     image: NDArray | string;
-    parameters?: CaptionParameters;
 }
 
-export interface EncodeInput {
+export interface EncodeInput extends EncodeParameters {
     text?: string;
     image?: NDArray | string;
-    parameters?: EncodeParameters;
 }
 
-export interface RankInput {
+export interface RankInput extends RankParameters {
     text?: string;
     image?: NDArray | string;
     candidates: NDArray[] | string[];
     candidates_type: 'text' | 'image';
-    parameters?: RankParameters;
 }
 
-export interface UpscaleInput {
+export interface UpscaleInput extends UpscaleParameters {
     image: NDArray | string;
-    parameters?: UpscaleParameters;
 }
 
-export interface VqaInput {
+export interface VqaInput extends VqaParameters {
     image: NDArray | string;
     question: string;
-    parameters?: VqaParameters;
-    [key: string]: any;
 }
 
 export interface Payload {

@@ -1,4 +1,4 @@
-import { Parameters } from 'interfaces/payload';
+import { EncodeInput, CaptionInput, RankInput, UpscaleInput, VqaInput } from 'interfaces/payload';
 import { NDArray } from 'interfaces/docarray';
 import { caption } from './tasks/caption';
 import { encode } from './tasks/encode';
@@ -19,66 +19,23 @@ export default class Model {
         this.modelName;
     }
 
-    public async caption(image: NDArray | string, parameters?: Parameters): Promise<string> {
-        return await caption({ image: image, parameters: parameters }, { endpoint: this.host, token: this.token });
+    public async caption(captionInput: CaptionInput): Promise<string | string[]> {
+        return await caption(captionInput, { endpoint: this.host, token: this.token });
     }
 
-    public async encodeText(text: string, parameters?: Parameters): Promise<NDArray> {
-        return await encode({ text: text, parameters: parameters }, { endpoint: this.host, token: this.token });
+    public async encode(encodeInput: EncodeInput): Promise<NDArray> {
+        return await encode(encodeInput, { endpoint: this.host, token: this.token });
     }
 
-    public async encodeImage(image: NDArray | string, parameters?: Parameters): Promise<NDArray> {
-        return await encode({ image: image, parameters: parameters }, { endpoint: this.host, token: this.token });
+    public async rank(rankInput: RankInput): Promise<NDArray[] | string[]> {
+        return await rank(rankInput, { endpoint: this.host, token: this.token });
     }
 
-    public async rankTextText(text: string, candidates: string[], parameters?: Parameters): Promise<string[]> {
-        return (await rank(
-            { text: text, candidates: candidates, candidates_type: 'text', parameters: parameters },
-            { endpoint: this.host, token: this.token }
-        )) as string[];
+    public upscale(upscaleInput: UpscaleInput): Promise<NDArray | string> {
+        return upscale(upscaleInput, { endpoint: this.host, token: this.token });
     }
 
-    public async rankTextImage(
-        text: string,
-        candidates: NDArray[] | string[],
-        parameters?: Parameters
-    ): Promise<NDArray[] | string[]> {
-        return await rank(
-            { text: text, candidates: candidates, candidates_type: 'image', parameters: parameters },
-            { endpoint: this.host, token: this.token }
-        );
-    }
-
-    public async rankImageText(
-        image: NDArray | string,
-        candidates: string[],
-        parameters?: Parameters
-    ): Promise<string[]> {
-        return (await rank(
-            { image: image, candidates: candidates, candidates_type: 'text', parameters: parameters },
-            { endpoint: this.host, token: this.token }
-        )) as string[];
-    }
-
-    public async rankImageImage(
-        image: NDArray | string,
-        candidates: NDArray[] | string[],
-        parameters?: Parameters
-    ): Promise<NDArray[] | string[]> {
-        return await rank(
-            { image: image, candidates: candidates, candidates_type: 'image', parameters: parameters },
-            { endpoint: this.host, token: this.token }
-        );
-    }
-
-    public async upscale(image: NDArray | string, parameters?: Parameters): Promise<NDArray | string> {
-        return await upscale({ image: image, parameters: parameters }, { endpoint: this.host, token: this.token });
-    }
-
-    public async vqa(image: NDArray | string, question: string, parameters?: Parameters): Promise<string> {
-        return await vqa(
-            { image: image, question: question, parameters: parameters },
-            { endpoint: this.host, token: this.token }
-        );
+    public async vqa(vqaInput: VqaInput): Promise<string> {
+        return await vqa(vqaInput, { endpoint: this.host, token: this.token });
     }
 }

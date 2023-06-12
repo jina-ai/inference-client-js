@@ -1,5 +1,5 @@
 import { Document, DocumentArray } from 'interfaces/docarray';
-import { AllParameters, BasePayloadInput, Payload, VqaInput } from 'interfaces/payload';
+import { BasePayloadInput, Payload, VqaInput } from 'interfaces/payload';
 import { getBasePayload, loadPlainIntoDocument } from './helper';
 import { fetch } from 'undici';
 
@@ -14,7 +14,7 @@ export async function vqa(vqaInput: VqaInput, basePaylaodInput: BasePayloadInput
 }
 
 async function getVqaPayload(vqaInput: VqaInput, basePaylaodInput: BasePayloadInput): Promise<Payload> {
-    const payload = getBasePayload(vqaInput.parameters as AllParameters, basePaylaodInput);
+    const payload = getBasePayload(vqaInput, basePaylaodInput);
     payload.body.exec_endpoint = '/vqa';
 
     const doc = (await loadPlainIntoDocument(vqaInput.image, 'image')) as Document;

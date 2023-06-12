@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import { fetch } from 'undici';
 
 export async function getModelSpec(modelName: string, token: string): Promise<any> {

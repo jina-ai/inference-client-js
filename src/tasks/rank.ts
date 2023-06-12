@@ -1,5 +1,5 @@
 import { Document, DocumentArray, NDArray } from 'interfaces/docarray';
-import { AllParameters, BasePayloadInput, Payload, RankInput } from 'interfaces/payload';
+import { BasePayloadInput, Payload, RankInput } from 'interfaces/payload';
 import { getBasePayload, loadPlainIntoDocument } from './helper';
 import { fetch } from 'undici';
 
@@ -14,7 +14,7 @@ export async function rank(rankInput: RankInput, basePayloadInput: BasePayloadIn
 }
 
 async function getRankPayload(rankInput: RankInput, basePayloadInput: BasePayloadInput): Promise<Payload> {
-    const payload = getBasePayload(rankInput.parameters as AllParameters, basePayloadInput);
+    const payload = getBasePayload(rankInput, basePayloadInput);
     payload.body.exec_endpoint = '/rank';
 
     let doc: Document;
