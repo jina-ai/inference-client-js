@@ -17,7 +17,7 @@ async function getCaptionPayload(captionInput: CaptionInput, basePayloadInput: B
  
     const doc = await loadPlainIntoDocument(captionInput.image, "image");
     payload.body.data = [doc] as DocumentArray;
-    return payload
+    return payload 
 }
 
 
