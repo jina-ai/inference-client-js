@@ -1,8 +1,16 @@
 # Inference Client JS
 
+## Installation
+
+```bash
+$ npm install inference-client
+```
+
 ## Initialization
 
 ```javascript
+import Client from 'inference-client';
+
 const client = new Client('Your Jina AI Auth Token')
 ```
 
@@ -11,7 +19,9 @@ const client = new Client('Your Jina AI Auth Token')
 ```javascript
 const model = await client.getModel('Salesforce/blip2-flan-t5-xl');
 
-const c = await model.caption('url/or/path/to/image');
+const c = await model.caption({ image: 'https://picsum.photos/200' });
+// OR 
+const c = await model.caption({ image: 'path/to/local/image' });
 
 console.log(c);
 ```
@@ -21,9 +31,11 @@ console.log(c);
 ```javascript
 const model = await client.getModel('ViT-H-14::laion2b-s32b-b79k');
 
-const e = await model.encodeText('Hello World');
+const e = await model.encode({ text: 'hello world' });
 // OR
-const e = await model.encodeImage('url/or/path/to/image');
+const e = await model.encode({ image: 'https://picsum.photos/200' });
+// OR
+const e = await model.encode({ image: 'path/to/local/image' });
 
 console.log(e);
 ```
@@ -33,13 +45,24 @@ console.log(e);
 ```javascript
 const model = await client.getModel('ViT-H-14::laion2b-s32b-b79k');
 
-const r = await model.rankTextText('hello world', ['hello Jina', 'hello Ziniu']);
+const r = await model.rank({ text: 'hello world', text_candidates: ['hello Jina', 'hello Ziniu'] });
+
 // OR
-const r = await model.rankTextImage('green field and blue sky', ['https://picsum.photos/id/254/200', 'https://picsum.photos/id/255/200']);
+
+const r = await model.rank({
+    text: 'green field and blue sky',
+    image_candidates: ['https://picsum.photos/id/254/200', 'https://picsum.photos/id/255/200'],
+});
 // OR
-const r = await model.rankImageText('https://picsum.photos/id/254/200', ['green field and blue sky', 'black trees']);
+const r = await model.rank({
+    image: 'https://picsum.photos/id/254/200',
+    text_candidates: ['green field and blue sky', 'black trees'],
+});
 // OR
-const r = await model.rankImageImage('https://picsum.photos/id/251/200', ['https://picsum.photos/id/254/200', 'https://picsum.photos/id/255/200'])
+const r = await model.rank({
+    image: 'https://picsum.photos/id/251/200',
+    image_candidates: ['https://picsum.photos/id/254/200', 'https://picsum.photos/id/255/200'],
+});
 
 console.log(r);
 ```
@@ -49,7 +72,11 @@ console.log(r);
 ```javascript
 const model = await client.getModel('LapSRN_x2')
 
-const u = await model.upscale('url/or/path/to/image');
+const u = await model.upscale({ image: 'https://picsum.photos/id/251/200' });
+// OR
+const u = await model.upscale({ image: 'https://picsum.photos/id/251/200', scale: '600:800' });
+// OR
+const u = await model.upscale({ image: 'https://picsum.photos/id/251/200', image_format: 'jpeg' });
 
 console.log(u);
 ```
@@ -59,7 +86,15 @@ console.log(u);
 ```javascript
 const model = await client.getModel('Salesforce/blip2-flan-t5-xl');
 
-const v = await model.vqa('url/or/path/to/image', 'What is the color of the sky?');
+const v = await model.vqa({
+    image: 'https://picsum.photos/200',
+    question: 'Qustion: what are the main colors of this image? Answer:',
+});
+// OR
+const v = await model.vqa({
+    image: 'path/to/local/image',
+    question: 'Qustion: what are the main colors of this image? Answer:',
+});
 
 console.log(v);
 ```
