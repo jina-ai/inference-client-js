@@ -1,6 +1,6 @@
 {
     "name": "inference-client",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Jina Inference Client for JavaScript",
     "main": "index.ts",
     "types": "index.d.ts",
