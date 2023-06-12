@@ -18,7 +18,12 @@ export interface UpscaleParameters extends Parameters {
 
 export type VqaParameters = Parameters;
 
-export interface AllParameters extends CaptionParameters, EncodeParameters, RankParameters, VqaParameters {}
+export interface AllParameters
+    extends CaptionParameters,
+        EncodeParameters,
+        RankParameters,
+        UpscaleParameters,
+        VqaParameters {}
 
 export interface BasePayloadInput {
     endpoint: string;
@@ -37,8 +42,8 @@ export interface EncodeInput extends EncodeParameters {
 export interface RankInput extends RankParameters {
     text?: string;
     image?: NDArray | string;
-    candidates: NDArray[] | string[];
-    candidates_type: 'text' | 'image';
+    text_candidates?: string[];
+    image_candidates?: NDArray[] | string[];
 }
 
 export interface UpscaleInput extends UpscaleParameters {

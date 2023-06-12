@@ -31,7 +31,7 @@ export default class Model {
         return await rank(rankInput, { endpoint: this.host, token: this.token });
     }
 
-    public upscale(upscaleInput: UpscaleInput): Promise<NDArray | string> {
+    public async upscale(upscaleInput: UpscaleInput): Promise<NDArray | string> {
         return upscale(upscaleInput, { endpoint: this.host, token: this.token });
     }
 

@@ -18,10 +18,12 @@ async function getEncodePayload(encodeInput: EncodeInput, basePayloadInput: Base
     payload.body.exec_endpoint = '/encode';
 
     let doc;
-    if (encodeInput.text) {
+    if (encodeInput.text && !encodeInput.image) {
         doc = await loadPlainIntoDocument(encodeInput.text, 'text');
-    } else if (encodeInput.image) {
+    } else if (encodeInput.image && !encodeInput.text) {
         doc = await loadPlainIntoDocument(encodeInput.image, 'image');
+    } else if (encodeInput.image && encodeInput.text) {
+        throw new Error('Multi-modal input not supported. Please provide only text or image input.');
     } else {
         throw new Error('Please provide either text or image to encode.');
     }

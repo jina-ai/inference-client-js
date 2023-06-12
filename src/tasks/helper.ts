@@ -47,12 +47,12 @@ export async function loadPlainIntoDocument(content: NDArray | string, mimeType?
 }
 
 export function getBasePayload(parameters: AllParameters, basePayloadInput: BasePayloadInput): Payload {
-    parameters = parameters ?? {};
-    parameters.drop_image_content = parameters.drop_image_content ?? true;
+    const payloadParameters: AllParameters = {} as AllParameters;
+    payloadParameters.drop_image_content = parameters.drop_image_content ?? true;
 
     const payload: Payload = {} as Payload;
     const headers = { 'Content-Type': 'application/json', 'Authorization': basePayloadInput.token };
-    const body = { parameters: parameters };
+    const body = { parameters: payloadParameters };
     payload.headers = headers;
     payload.body = body;
     return payload;

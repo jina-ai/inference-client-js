@@ -1,5 +1,5 @@
 import { Document, DocumentArray, NDArray } from 'interfaces/docarray';
-import { BasePayloadInput, Payload, UpscaleInput } from 'interfaces/payload';
+import { AllParameters, BasePayloadInput, Payload, UpscaleInput } from 'interfaces/payload';
 import { getBasePayload, loadPlainIntoDocument } from './helper';
 import { fetch } from 'undici';
 
@@ -17,7 +17,7 @@ export async function upscale(
 }
 
 async function getUpscalePayload(upscaleInput: UpscaleInput, basePayloadInput: BasePayloadInput): Promise<Payload> {
-    const payload = getBasePayload(upscaleInput, basePayloadInput);
+    const payload = getBasePayload(upscaleInput as AllParameters, basePayloadInput);
     payload.body.exec_endpoint = '/upscale';
 
     const doc = (await loadPlainIntoDocument(upscaleInput.image, 'image')) as Document;
@@ -31,6 +31,11 @@ async function getUpscalePayload(upscaleInput: UpscaleInput, basePayloadInput: B
         doc.tags = { output_path: output_path };
     }
     payload.body.data = [doc] as DocumentArray;
+
+    const scale = upscaleInput.scale;
+    if (scale) {
+        payload.body.parameters = { ...payload.body.parameters, scale: scale };
+    }
     return payload;
 }
 
