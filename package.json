@@ -12,6 +12,7 @@
         "mangle-version": "mangle-version",
         "publish:beta": "npm publish --tag beta --access public",
         "publish:latest": "npm publish --tag latest --access public",
+        "lint": "eslint \"src/**/*.ts\" --fix",
         "prepare": "husky install"
     },
     "repository": {
