@@ -20,7 +20,7 @@
         "url": "ssh://git@git.naiver.org:6022/naiverlabs/typescript-toolkit.git"
     },
     "author": "Jina AI",
-    "license": "AGPL",
+    "license": "Apache-2.0",
     "engines": {
         "node": ">=18"
     },
