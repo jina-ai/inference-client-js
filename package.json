@@ -2,11 +2,11 @@
     "name": "inference-client",
     "version": "0.0.1",
     "description": "Jina Inference Client for JavaScript",
-    "main": "index.js",
+    "main": "index.ts",
     "types": "index.d.ts",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "tsc -p .",
+        "build": "tsc",
         "build:pub": "tsc -p ./tsconfig.pub.json",
         "build:clean": "git clean -dfx -e node_modules -e .vscode",
         "mangle-version": "mangle-version",
