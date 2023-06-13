@@ -14,6 +14,7 @@ export interface UpscaleParameters extends Parameters {
     scale?: string;
     image_format?: 'png' | 'jpeg';
     output_path?: string;
+    quality?: number;
 }
 
 export type VqaParameters = Parameters;
