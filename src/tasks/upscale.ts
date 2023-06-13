@@ -36,6 +36,11 @@ async function getUpscalePayload(upscaleInput: UpscaleInput, basePayloadInput: B
     if (scale) {
         payload.body.parameters = { ...payload.body.parameters, scale: scale };
     }
+
+    const quality = upscaleInput.quality;
+    if (quality) {
+        payload.body.parameters = { ...payload.body.parameters, quality: quality };
+    }
     return payload;
 }
 
