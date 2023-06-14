@@ -11,7 +11,7 @@ $ npm install inference-client
 ```javascript
 import Client from 'inference-client';
 
-const client = new Client('Your Jina AI Auth Token')
+const client = new Client('Your Jina AI Auth Token');
 ```
 
 ## Caption
@@ -20,7 +20,7 @@ const client = new Client('Your Jina AI Auth Token')
 const model = await client.getModel('Salesforce/blip2-flan-t5-xl');
 
 const c = await model.caption({ image: 'https://picsum.photos/200' });
-// OR 
+// OR
 const c = await model.caption({ image: 'path/to/local/image' });
 
 console.log(c);
@@ -46,9 +46,7 @@ console.log(e);
 const model = await client.getModel('ViT-H-14::laion2b-s32b-b79k');
 
 const r = await model.rank({ text: 'hello world', text_candidates: ['hello Jina', 'hello Ziniu'] });
-
 // OR
-
 const r = await model.rank({
     text: 'green field and blue sky',
     image_candidates: ['https://picsum.photos/id/254/200', 'https://picsum.photos/id/255/200'],
@@ -70,13 +68,15 @@ console.log(r);
 ## Upscale
 
 ```javascript
-const model = await client.getModel('LapSRN_x2')
+const model = await client.getModel('LapSRN_x2');
 
 const u = await model.upscale({ image: 'https://picsum.photos/id/251/200' });
 // OR
 const u = await model.upscale({ image: 'https://picsum.photos/id/251/200', scale: '600:800' });
 // OR
 const u = await model.upscale({ image: 'https://picsum.photos/id/251/200', image_format: 'jpeg' });
+// OR
+const u = await model.upscale({ image: 'https://picsum.photos/id/251/200', quality: 80 });
 
 console.log(u);
 ```
