@@ -1,6 +1,7 @@
 import { Document, DocumentArray } from '../interfaces/docarray';
+import { randomUUID } from 'crypto';
 import { BasePayloadInput, Payload, TextToImageInput } from '../interfaces/payload';
-import { getBasePayload, loadPlainIntoDocument } from './helper';
+import { getBasePayload } from './helper';
 
 export async function textToImage(
     textToImageInput: TextToImageInput,
@@ -22,7 +23,7 @@ async function getTextToImagePayload(
     const payload = getBasePayload(textToImageInput, basePaylaodInput);
     payload.body.exec_endpoint = '/text_to_image';
 
-    const doc = (await loadPlainIntoDocument('', 'empty')) as Document;
+    const doc = { id: randomUUID() } as Document;
     doc.tags = { prompt: textToImageInput.prompt, negative_prompt: textToImageInput.negative_prompt };
     payload.body.data = [doc] as DocumentArray;
     return payload;
