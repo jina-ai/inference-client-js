@@ -36,6 +36,8 @@ export async function loadPlainIntoDocument(content: NDArray | string, mimeType?
         }
     } else if (mimeType === 'text') {
         return { id: randomUUID(), text: content as string };
+    } else if (mimeType === 'empty') {
+        return { id: randomUUID() };
     }
     if (!mimeType) {
         try {
