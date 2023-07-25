@@ -5,7 +5,7 @@ import { getBasePayload, loadPlainIntoDocument } from './helper';
 export async function imageToImage(
     imageToImageInput: ImageToImageInput,
     basePaylaodInput: BasePayloadInput
-): Promise<NDArray | NDArray[] | string[] | string> {
+): Promise<NDArray | NDArray[] | string | string[]> {
     const payload = await getImageToImagePayload(imageToImageInput, basePaylaodInput);
     const result = await fetch(basePaylaodInput.endpoint + '/post', {
         method: 'POST',
@@ -54,7 +54,7 @@ async function getImageToImagePayload(
     return payload;
 }
 
-async function unboxImageToImageResult(result: any): Promise<NDArray | NDArray[] | string[] | string> {
+async function unboxImageToImageResult(result: any): Promise<NDArray | NDArray[] | string | string[]> {
     const output = [];
     for (const match of result.data[0].matches) {
         output.push(match.blob ?? match.tensor ?? undefined);

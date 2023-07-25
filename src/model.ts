@@ -37,7 +37,7 @@ export default class Model {
         return await encode(encodeInput, { endpoint: this.host, token: this.token });
     }
 
-    public async imageToImage(imageToImageInput: ImageToImageInput): Promise<NDArray | NDArray[] | string[] | string> {
+    public async imageToImage(imageToImageInput: ImageToImageInput): Promise<NDArray | NDArray[] | string | string[]> {
         return await imageToImage(imageToImageInput, { endpoint: this.host, token: this.token });
     }
 

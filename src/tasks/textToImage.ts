@@ -6,7 +6,7 @@ import { getBasePayload } from './helper';
 export async function textToImage(
     textToImageInput: TextToImageInput,
     basePaylaodInput: BasePayloadInput
-): Promise<NDArray | NDArray[] | string[] | string> {
+): Promise<NDArray | NDArray[] | string | string[]> {
     const payload = await getTextToImagePayload(textToImageInput, basePaylaodInput);
     const result = await fetch(basePaylaodInput.endpoint + '/post', {
         method: 'POST',
@@ -55,7 +55,7 @@ async function getTextToImagePayload(
     return payload;
 }
 
-async function unboxTextToImageResult(result: any): Promise<NDArray | NDArray[] | string[] | string> {
+async function unboxTextToImageResult(result: any): Promise<NDArray | NDArray[] | string | string[]> {
     const output = [];
     for (const match of result.data[0].matches) {
         output.push(match.blob ?? match.tensor ?? undefined);
