@@ -1,8 +1,9 @@
-import { EncodeInput, CaptionInput, RankInput, UpscaleInput, VqaInput } from './interfaces/payload';
+import { EncodeInput, CaptionInput, RankInput, TextToImageInput, UpscaleInput, VqaInput } from './interfaces/payload';
 import { NDArray } from './interfaces/docarray';
 import { caption } from './tasks/caption';
 import { encode } from './tasks/encode';
 import { rank } from './tasks/rank';
+import { textToImage } from './tasks/textToImage';
 import { upscale } from './tasks/upscale';
 import { vqa } from './tasks/vqa';
 
@@ -29,6 +30,10 @@ export default class Model {
 
     public async rank(rankInput: RankInput): Promise<NDArray[] | string[]> {
         return await rank(rankInput, { endpoint: this.host, token: this.token });
+    }
+
+    public async textToImage(textToImageInput: TextToImageInput): Promise<any> {
+        return await textToImage(textToImageInput, { endpoint: this.host, token: this.token });
     }
 
     public async upscale(upscaleInput: UpscaleInput): Promise<NDArray | string> {
