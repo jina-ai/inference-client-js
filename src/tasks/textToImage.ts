@@ -5,10 +5,10 @@ import { getBasePayload } from './helper';
 
 export async function textToImage(
     textToImageInput: TextToImageInput,
-    basePaylaodInput: BasePayloadInput
+    basePayloadInput: BasePayloadInput
 ): Promise<NDArray | NDArray[] | string | string[]> {
-    const payload = await getTextToImagePayload(textToImageInput, basePaylaodInput);
-    const result = await fetch(basePaylaodInput.endpoint + '/post', {
+    const payload = await getTextToImagePayload(textToImageInput, basePayloadInput);
+    const result = await fetch(basePayloadInput.endpoint + '/post', {
         method: 'POST',
         headers: payload.headers,
         body: JSON.stringify(payload.body),
@@ -18,9 +18,9 @@ export async function textToImage(
 
 async function getTextToImagePayload(
     textToImageInput: TextToImageInput,
-    basePaylaodInput: BasePayloadInput
+    basePayloadInput: BasePayloadInput
 ): Promise<Payload> {
-    const payload = getBasePayload(textToImageInput, basePaylaodInput);
+    const payload = getBasePayload(textToImageInput, basePayloadInput);
     payload.body.exec_endpoint = '/text-to-image';
 
     const doc = { id: randomUUID() } as Document;

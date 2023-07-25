@@ -4,10 +4,10 @@ import { getBasePayload, loadPlainIntoDocument } from './helper';
 
 export async function imageToImage(
     imageToImageInput: ImageToImageInput,
-    basePaylaodInput: BasePayloadInput
+    basePayloadInput: BasePayloadInput
 ): Promise<NDArray | NDArray[] | string | string[]> {
-    const payload = await getImageToImagePayload(imageToImageInput, basePaylaodInput);
-    const result = await fetch(basePaylaodInput.endpoint + '/post', {
+    const payload = await getImageToImagePayload(imageToImageInput, basePayloadInput);
+    const result = await fetch(basePayloadInput.endpoint + '/post', {
         method: 'POST',
         headers: payload.headers,
         body: JSON.stringify(payload.body),
@@ -17,9 +17,9 @@ export async function imageToImage(
 
 async function getImageToImagePayload(
     imageToImageInput: ImageToImageInput,
-    basePaylaodInput: BasePayloadInput
+    basePayloadInput: BasePayloadInput
 ): Promise<Payload> {
-    const payload = getBasePayload(imageToImageInput, basePaylaodInput);
+    const payload = getBasePayload(imageToImageInput, basePayloadInput);
     payload.body.exec_endpoint = '/image-to-image';
 
     const doc = (await loadPlainIntoDocument(imageToImageInput.image, 'image')) as Document;
