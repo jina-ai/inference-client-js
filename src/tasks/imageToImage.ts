@@ -1,40 +1,37 @@
 import { Document, DocumentArray, NDArray } from '../interfaces/docarray';
-import { randomUUID } from 'crypto';
-import { BasePayloadInput, Payload, TextToImageInput, TextToImageParameters } from '../interfaces/payload';
-import { getBasePayload } from './helper';
+import { BasePayloadInput, Payload, ImageToImageInput, ImageToImageParameters } from '../interfaces/payload';
+import { getBasePayload, loadPlainIntoDocument } from './helper';
 
-export async function textToImage(
-    textToImageInput: TextToImageInput,
+export async function imageToImage(
+    imageToImageInput: ImageToImageInput,
     basePaylaodInput: BasePayloadInput
 ): Promise<NDArray | NDArray[] | string[] | string> {
-    const payload = await getTextToImagePayload(textToImageInput, basePaylaodInput);
+    const payload = await getImageToImagePayload(imageToImageInput, basePaylaodInput);
     const result = await fetch(basePaylaodInput.endpoint + '/post', {
         method: 'POST',
         headers: payload.headers,
         body: JSON.stringify(payload.body),
     });
-    return await unboxTextToImageResult(await result.json());
+    return await unboxImageToImageResult(await result.json());
 }
 
-async function getTextToImagePayload(
-    textToImageInput: TextToImageInput,
+async function getImageToImagePayload(
+    imageToImageInput: ImageToImageInput,
     basePaylaodInput: BasePayloadInput
 ): Promise<Payload> {
-    const payload = getBasePayload(textToImageInput, basePaylaodInput);
-    payload.body.exec_endpoint = '/text-to-image';
+    const payload = getBasePayload(imageToImageInput, basePaylaodInput);
+    payload.body.exec_endpoint = '/image-to-image';
 
-    const doc = { id: randomUUID() } as Document;
-    doc.tags = { prompt: textToImageInput.prompt, negative_prompt: textToImageInput.negative_prompt };
+    const doc = (await loadPlainIntoDocument(imageToImageInput.image, 'image')) as Document;
+    doc.tags = { prompt: imageToImageInput.prompt, negative_prompt: imageToImageInput.negative_prompt };
     payload.body.data = [doc] as DocumentArray;
 
     const parameterTemplate = {
-        height: undefined,
-        width: undefined,
+        strength: undefined,
         num_inference_steps: undefined,
         guidance_scale: undefined,
         num_images_per_prompt: undefined,
         eta: undefined,
-        latents: undefined,
         output_type: undefined,
         return_dict: undefined,
         cross_attention_kwargs: undefined,
@@ -42,20 +39,22 @@ async function getTextToImagePayload(
         original_size: undefined,
         crops_coords_top_left: undefined,
         target_size: undefined,
-    } as TextToImageParameters;
+        aesthetic_score: undefined,
+        negative_aesthetic_score: undefined,
+    } as ImageToImageParameters;
 
     Object.keys(parameterTemplate).forEach((key) => {
-        if (textToImageInput[key as keyof TextToImageParameters]) {
+        if (imageToImageInput[key as keyof ImageToImageParameters]) {
             payload.body.parameters = {
                 ...payload.body.parameters,
-                [key]: textToImageInput[key as keyof TextToImageParameters],
+                [key]: imageToImageInput[key as keyof ImageToImageParameters],
             };
         }
     });
     return payload;
 }
 
-async function unboxTextToImageResult(result: any): Promise<NDArray | NDArray[] | string[] | string> {
+async function unboxImageToImageResult(result: any): Promise<NDArray | NDArray[] | string[] | string> {
     const output = [];
     for (const match of result.data[0].matches) {
         output.push(match.blob ?? match.tensor ?? undefined);
