@@ -10,6 +10,23 @@ export type EncodeParameters = Parameters;
 
 export type RankParameters = Parameters;
 
+export interface TextToImageParameters extends Parameters {
+    height?: number;
+    width?: number;
+    num_inference_steps?: number;
+    guidance_scale?: number;
+    num_images_per_prompt?: number;
+    eta?: number;
+    latents?: NDArray;
+    output_type?: 'pil' | 'latent';
+    return_dict?: boolean;
+    cross_attention_kwargs?: { [k: string]: any };
+    guidance_rescale?: number;
+    original_size?: number[];
+    crops_coords_top_left?: number[];
+    target_size?: number[];
+}
+
 export interface UpscaleParameters extends Parameters {
     scale?: string;
     image_format?: 'png' | 'jpeg';
@@ -23,6 +40,7 @@ export interface AllParameters
     extends CaptionParameters,
         EncodeParameters,
         RankParameters,
+        TextToImageParameters,
         UpscaleParameters,
         VqaParameters {}
 
@@ -45,6 +63,11 @@ export interface RankInput extends RankParameters {
     image?: NDArray | string;
     text_candidates?: string[];
     image_candidates?: NDArray[] | string[];
+}
+
+export interface TextToImageInput extends TextToImageParameters {
+    prompt: string;
+    negative_prompt?: string;
 }
 
 export interface UpscaleInput extends UpscaleParameters {
